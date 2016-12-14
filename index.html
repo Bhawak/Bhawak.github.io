@@ -1,0 +1,72 @@
+<html>
+	<head>
+		<title>My New Web Project!</title>
+		<link rel="stylesheet" href="https://unpkg.com/leaflet@1.0.2/dist/leaflet.css" />
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	
+	
+	<script src="https://unpkg.com/leaflet@1.0.2/dist/leaflet.js"></script>
+	
+	<style>
+		body { max-width: 1200px }
+		#mapCanvas { width: 1000px; height: 550px; margin: 10px }
+		.left { float: left; text-align: center }
+		.right { float: right; text-align: center }
+		.logo{
+	width: 800px;
+	float: center;
+	padding: 5px;
+}
+	</style>
+	</head>
+	
+	<body>
+		<div class="logo"><img src="images/hospital_logo.gif" alt="My Website!" /></div>
+		<div id="mapCanvas"></div>
+	</div>
+			<script type='text/javascript' src='KathmanduHospitalMap/kathmandu_valley_hospitals.geojson'></script>
+			<script type="text/javascript">
+		function makeMap(container, options) {
+			var osmUrl = 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+				osmAttrib = '&copy; <a href="http://openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+				osm = L.tileLayer(osmUrl, {maxZoom: 18, attribution: osmAttrib});
+			var map = L.map(container, options)
+				.setView([27.7172, 85.3340], 13)
+				.addLayer(osm);
+				//checked
+
+
+L.geoJSON(pass, {
+    onEachFeature: function (features, layer) {
+        // Check if feature is a polygon
+        if (features.geometry.type === 'Polygon') {
+            // Don't stroke and do opaque fill
+            layer.setStyle({
+                'weight': 0,
+                'fillOpacity': 0
+            });
+            // Get bounds of polygon
+            var bounds = layer.getBounds();
+            // Get center of bounds
+            var center = bounds.getCenter();
+            // Use center to put marker on map
+            var marker = L.marker(center).bindPopup( features.properties.name )
+				.addTo( map );
+        }
+    }
+}).addTo(map);
+		}
+		makeMap('mapCanvas', { preferCanvas: true });
+	</script>		
+		
+		<h4 style="color:green;font-family:verdana;font-size:200%;">Welcome to Hamro Hospital!</h4>
+					<p style="color:brown;font-family:verdana;font-size:100%;">
+		Here you can find all the hospital in Kathmandu Valley with the facilities and services they provide. The map is easy to navigate.   
+					By clicking on the Hospital the information about the hospitals are displayed. The information regarding the services like ultrasound, ECG, CT scan, ECO, the blood test specification, and etc are enlisted. The facilities like number of bed, number of doctors and the physicians are also alongside the facilities. This website is created so that the patient will get the information about the hospital easily in the virtual enviornment.   </p>
+					
+<br/>
+			Copyright Kathmandulivinglabs;2016. All Rights Reserved.
+		
+	</body>
+</html>
